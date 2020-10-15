@@ -1,0 +1,19 @@
+MONGO - read CSV to mongo db
+
+
+CMD shell
+
+mongoimport --db DB_NAME --collection COLLECTION_NAME --type=csv --file FILE_NAME_w_PATH --headerline
+
+
+WRITE DB to CSV
+
+mongoexport --db --collection --type=CSV --fields FIELD_LIST --out FILE_NAME_w_PATH
+mongoexport --db --collection --type=CSV --fieldFile FIELD_FILE_NAME --out FILE_NAME_w_PATH
+
+
+WRITE DB to JSON
+
+mongoexport --db --collection --out FILE_NAME_w_PATH
+
+

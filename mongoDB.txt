@@ -1,0 +1,228 @@
+cd C:\Program Files\MongoDB\Server\4.2\bin
+
+mongod
+
+> mongo
+
+> show dbs
+
+use people
+
+show collections
+db.famous.drop()
+
+use people
+db.dropDatabase()
+
+
+db.famous.insertOne({"name":"Sojourner Truth","birthYear":"1797"})
+db.famous.insertOne({"name":"Susan B. Anthony","birthYear":"1820"})
+db.famous.insertOne({"name":"Sojourner Truth","birthYear":"1906"})
+db.famous.insertOne({"name":"Jeff Smolinski","birthYear":"1977"})
+db.famous.insertOne({"name":"John Doe","birthYear":"1995"})
+
+db.famous.insertMany([
+	{"name":"joe 1","birthYear":"1797"},
+	{"name":"joe 2","birthYear":"1798"},
+	{"name":"joe 3","birthYear":"1799"},
+	{"name":"joe 4","birthYear":"1800"},
+
+])
+
+
+db.famous.find({name:{$gt: "1801"}})    <-- GREATER THAN
+
+db.famous.find()
+db.famous.find({name:"Grace Hopper"})
+db.famous.find({name:"Grace"})
+
+db.famous.find({name:{$regex: /joe/}})
+db.famous.find({name:{$regex: /jour/}})
+
+
+
+AGGREGATE
+
+db.somePeople.aggreagte([{$group:{ _id:'$state', numDocs:{$sum:1} }}])
+
+db.somePeople.aggreagte([{$group:{ _id:'$state', avgStartDriving:{$avg:'$startDriving'} }}])
+
+db.somePeople.aggreagte([{$group:{ _id:'$state', avgStartDriving:{$avg:'$startDriving'}, numInState: {$sum:1} }}])
+
+db.somePeople.aggreagte([{$group:{ _id:'$state', avgStartDriving:{$avg:'$startDriving'}, numInState: {$sum:1}, minDrivingAge:{$min:'$startDriving'} }}])
+
+
+PIPELINE AGREGATE
+
+db.somePeople.aggregate([
+	{$match: {birth:{$gt:1800}}},
+	{$group:{ _id:'$state', avgStartDriving:{$avg:'$startDriving'} }}
+])
+
+
+db.somePeople.aggregate([
+	{$match: {birth:{$gt:1800}}},
+	{$group:{ _id:'$state', avgStartDriving:{$avg:'$startDriving'}, numInState: {$sum:1} }},
+	{$sort: {'_id':1}}
+])
+
+:1  accending
+:-1 descending
+
+
+db.somePeople.aggregate([
+	{$match: {birth:{$gt:1800}}},
+	{$group:{ _id:'$state', 
+		avgStartDriving:{$avg:'$startDriving'}, 
+		numInState: {$sum:1},
+		sdates: {$push: {state:'$state', sAge: '$startDriving'}}
+	}},
+	{$sort: {'_id':1}}
+])
+
+
+
+
+
+LOAD through CMD cd C:\Program Files\MongoDB\Server\4.2\bin
+
+mongoimport --db emp_db --collection schoolData --type=csv --file empdata.csv --headerline
+
+
+
+{ "_id" : ObjectId("5ed273888a3a0cb7d3f55fe2"), 
+	"pid" : 1, 
+	"name" : "Mary1", 
+	"managerId" : 1, 
+	"state" : "WI", 
+	"age" : 24, 
+	"birth" : 1995, 
+	"salary" : 46436 
+}
+
+# all employees grouped by state and the number of employees in that state
+
+db.schoolData.aggregate([
+	{$group:{ _id:'$state', numEmp:{$sum:1} }}
+])
+
+
+db.schoolData.aggregate([
+	{$group:{ _id:'$state', avgAge:{$avg:'$age'} }}
+])
+
+
+db.schoolData.aggregate([
+	{$group:{ _id:'$state', avgAge:{$avg:'$age'} }},
+	{$sort: {'_id':1}}
+])
+
+
+db.schoolData.aggregate([
+	{$group:{ _id:'$managerId', numEmp:{$sum:1}, avgAge:{$avg:'$age'} }},
+	{$sort: {'_id':1}}
+])
+
+
+db.schoolData.aggregate([
+	{$match: {birth:{$gt:1990}}},
+	{$group:{ _id:'$managerId', numEmp:{$sum:1}, avgAge:{$avg:'$age'} }},
+	{$sort: {'_id':1}}
+])
+
+
+
+db.schoolData.aggregate([
+	{$match: {birth:{$gt:1990}}},
+	{$group:{ _id:'$managerId', numEmp:{$sum:1}, avgAge:{$avg:'$age'} }},
+	{$sort: {'_id':1}}
+])
+
+
+
+
+
+
+
+
+
+
+db.thePeople.find({'numChildren':{'$eq':7}})
+
+
+db.thePeople.find(
+	{'numChildren':7},
+	{'_id':0, 'pid':1, 'state':1, 'children':1, }
+)
+
+
+db.thePeople.find(
+	{'numChildren':7,'numChildren':6,'state':'CA'},
+	{'_id':0, 'pid':1, 'state':1, 'children':1, }
+)
+
+
+db.thePeople.find(
+	{'numChildren':7,'numChildren':6,'state':'CA'}
+)
+
+db.thePeople.find(
+	{'numChildren':7},
+	{'numChildren':6},
+	{'state':'CA'}
+)
+
+db.thePeople.find(
+	{'state':'CA'},
+	{'numChildren':[6,7]}
+)
+
+db.thePeople.find(
+	{'state':'CA'},
+	{'numChildren': 6}
+)
+
+select * from thePeople where numChildren=6 or numChildren=7 and state='CA'
+
+
+
+
+db.thePeople.find(
+	{},
+	{'_id':0, 'pid':1, 'state':1, 'children':1, 'numChildren':{'$eq':7}}
+)
+
+
+
+
+
+db.thePeople.aggregate([
+	{numChildren: { $eq: 7 },},
+     {
+       $project:
+          {
+            pid: 1,
+            state: 1,
+            children: 1,
+            _id: 0
+          }
+     }
+   ])
+
+
+
+
+db.thePeople.find({
+	$and:[
+		{'numChildren':6},
+		{'numChildren':7},
+		{'state':'CA'}
+	]
+})
+
+
+
+
+
+
+

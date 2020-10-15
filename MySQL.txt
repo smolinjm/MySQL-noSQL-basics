@@ -1,0 +1,68 @@
+
+CMD as Administrator
+
+cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+
+START MYSQL 
+mysql --local_infile=1 -u root -p
+mysql --local_infile=1 -u testuser1 -p
+
+@----87x2
+
+quit
+
+
+mysql> SET GLOBAL local_infile=1;   // local bulk data loader setting
+quit
+relogin mysql
+source file.sql
+
+
+
+SQL
+
+use world ;
+
+show databases ;
+show tables ;
+
+
+select C.Name, C.Population from city C where C.CountryCode = 'USA' ;
+
+select count(*) from city ;
+
+describe city ;
+
+select CC.code, CC.Name, C.Name
+from city C, country CC
+where C.CountryCode = CC.Code and C.CountryCode = 'USA' ;
+
+
+
+
+
+start MySQL
+show databases ;
+create database 'database_name' ;
+use 'database_name' ;
+drop table if exists 'table_name' ;
+create table 'table_name' ;
+insert into 'table_name' values (.,.,.,.);
+select * from ...
+
+create table Sailors (
+sid int,
+name varchar(20) NOT NULL,
+age int,
+rating float NOT NULL,
+Primary Key (sid)
+) ;
+
+insert into Sailors values (1,"Captain Ahab",18,8) ;
+insert into Sailors values (1,"Blackbeard",21,7) ;
+insert into Sailors values (1,"Bootstrap Bill",24,9) ;
+
+update sailors set age = age + 1 ;
+
+
