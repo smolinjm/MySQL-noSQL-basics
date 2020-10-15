@@ -48,18 +48,18 @@ create table Game_Server (
 
 
 create table enter_lobby (
-	u_id int NOT NULL,
+	h_id int NOT NULL,
 	l_id int NOT NULL,
-	Primary Key (u_id,l_id),
-	Foreign Key (u_id) references User(u_id),
+	Primary Key (h_id,l_id),
+	Foreign Key (h_id) references humans(h_id),
 	Foreign Key (l_id) references Lobby(l_id)
 ) ;
 
 create table join_instance (
-	u_id int NOT NULL,
+	h_id int NOT NULL,
 	g_id int NOT NULL,
-	Primary Key (u_id,g_id),
-	Foreign Key (u_id) references User(u_id),
+	Primary Key (h_id,g_id),
+	Foreign Key (h_id) references humans(h_id),
 	Foreign Key (g_id) references Game_Server(g_id)
 ) ;
 
@@ -99,7 +99,7 @@ insert into User values (
 load data local infile
 'game_data.txt'
   into table humans
-  fields terminated by ','
+  fields terminated by ', '
   lines terminated by '\n' ;
 
 
