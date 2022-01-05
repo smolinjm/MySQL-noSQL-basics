@@ -74,7 +74,7 @@ describe join_instance ;
 
 -- insert into enter_lobby values (55555,301) ;  Foriegn Key ERROR.
 
--- insert into User values (1000001,"Michael",'smolinski@gmail.com',42,'8556 E Amherst Cir','Denver','CO') ;
+-- insert into User values (1000001,"Michael",'insk@gmail.com',42,'5555 E Amburst Cir','Denver','CO') ;
 -- insert into User values (1000000, Bethany Mccarthy, bethany.mccarthy@hotmail.com, 389-36-4538, 1972-11-04, 3241 Taylor Mountain Apt. 195, Hensleyview, LA, 31931, 192.168.152.45, 30095212734507__10/27__434) ;
  /*
 	ipv4 int unsigned,
@@ -92,7 +92,7 @@ insert into User values (
 	192.168.152.45, 
 	30095212734507__10/27__434) ;
 */
--- insert into User values (1000002,"Jeff",'mail@jeffsmolinski.com',42,'8080 Ashgrove Dr','Cincinnati','OH') ;
+-- insert into User values (1000002,"Jeff",'mail@jeff.com',42,'8888 Ashdrive Dr','Dayton','HI') ;
 
 -- C:/Users/smoli/Dropbox/_ME/school/University of Denver/Course 3421/Homework4/
 
